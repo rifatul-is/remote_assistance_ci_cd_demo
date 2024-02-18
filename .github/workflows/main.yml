@@ -16,26 +16,23 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Cache Katalon Studio
-      uses: actions/cache@v2
-      with:
-        path: ~/katalon
-        key: ${{ runner.os }}-katalon-${{ hashFiles('**/projectPath') }}
-        restore-keys: |
-          ${{ runner.os }}-katalon-
-
-    - name: Download and Install Katalon Studio
+    - name: Enable KVM
       run: |
-        KATALON_VERSION=8.x.x
-        wget -O katalon-studio.deb "https://github.com/katalon-studio/katalon-studio/releases/download/v$KATALON_VERSION/Katalon_Studio_Engine_Linux_64-$KATALON_VERSION.deb"
-        sudo dpkg -i katalon-studio.deb
-        #katalonc -noSplash -runMode=console -projectPath="$(pwd)/your-project-folder" -retry=0 -testSuitePath="Test Suites/your_test_suite" -executionProfile="default" -browserType="Android" -apiKey="your_Katalon_API_key"
-        ./katalonc -noSplash -runMode=console -projectPath="/katalon-tests/Test.prj" -retry=0 -testSuitePath="/katalon-tests/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="85c71a78-37fe-491c-8054-e9409964c277" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true -webui.autoUpdateDrivers=true -appiumDirectory="/opt/homebrew/lib/node_modules/appium"
-    - name: Upload Test Reports
-      uses: actions/upload-artifact@v2
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+        
+    - name: Install and Run Appium Server
+      uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4
+        
+    - name: Katalon Studio Github Action
+      uses: katalon-studio/katalon-studio-github-action@v3.0
       with:
-        name: test-reports
-        path: path/to/your/report/folder
+          version: '7.5.5'
+          projectPath: '${{ github.workspace/katalon-tests}}'
+          args: '-noSplash -runMode=console -projectPath="/katalon-tests/Test.prj" -retry=0 -testSuitePath="/katalon-tests/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="85c71a78-37fe-491c-8054-e9409964c277" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true -webui.autoUpdateDrivers=true -appiumDirectory="/opt/homebrew/lib/node_modules/appium"'
+
+  
 
 
         
