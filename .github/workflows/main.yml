@@ -23,7 +23,8 @@ jobs:
       uses: ReactiveCircus/android-emulator-runner@v2
       with:
         api-level: 29
-        
+        script: ./gradlew connectedCheck
+
         
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
