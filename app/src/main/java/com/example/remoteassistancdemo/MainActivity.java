@@ -30,9 +30,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isAccessibilitySettingsOn(getApplicationContext())) {
             showAccessibilityPermissionDialog();
         }
-        else {
-            Log.d("TAG", "onCreate: Problem");
-        }
+        
         btnAuto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
