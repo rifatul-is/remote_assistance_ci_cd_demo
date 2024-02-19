@@ -27,7 +27,7 @@ jobs:
           ${{ runner.os }}-android-sdk-
 
     - name: Setup Android SDK
-      run: ./scripts/setup-android-sdk.sh
+      run: ./scripts/set_up_android_sdk.sh.sh
       
     - name: Create and start emulator
       run: ./scripts/create-and-start-emulator.sh
