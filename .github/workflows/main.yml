@@ -16,21 +16,49 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Cache Android SDK and emulator
-      uses: actions/cache@v2
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v2
+      
+#    - name: Cache Android SDK and emulator
+#      uses: actions/cache@v2
+#      with:
+#        path: |
+#          ~/Library/Android/sdk
+#          ~/.android
+#        key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/build.gradle') }}
+#        restore-keys: |
+#          ${{ runner.os }}-android-sdk-
+#
+#    - name: Setup Android SDK
+#      run: /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/set_up_android_sdk.sh
+
+#    - name: Create and start emulator
+#      run: /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/start_emulator.sh
+
+    - name: AVD cache
+      uses: actions/cache@v4
+      id: avd-cache
       with:
         path: |
-          ~/Library/Android/sdk
-          ~/.android
-        key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/build.gradle') }}
-        restore-keys: |
-          ${{ runner.os }}-android-sdk-
+          ~/.android/avd/*
+          ~/.android/adb*
+        key: avd-${{ matrix.api-level }}
 
-    - name: Setup Android SDK
-      run: /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/set_up_android_sdk.sh
+    - name: create AVD and generate snapshot for caching
+      if: steps.avd-cache.outputs.cache-hit != 'true'
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api-level }}
+        force-avd-creation: false
+        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        disable-animations: false
+        script: echo "Generated AVD snapshot for caching."
 
-    - name: Create and start emulator
-      run: /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/start_emulator.sh
+    - name: Run Emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 30
+        script: ./gradlew connectedCheck
 
     - name: Check disk space
       run: df -h
