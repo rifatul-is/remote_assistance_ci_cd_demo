@@ -6,29 +6,33 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# Create an AVD if it doesn't exist
-AVD_NAME="testEmulator"
-if [ ! -d $HOME/.android/avd/${AVD_NAME}.avd ]; then
-  echo "Creating AVD named ${AVD_NAME}"
-  echo "no" | avdmanager create avd -n $AVD_NAME -k "system-images;android-30;google_apis;x86_64" --force
-else
-  echo "AVD ${AVD_NAME} already exists"
+# Download and unzip Android Command Line Tools if not already installed
+if [ ! -d $ANDROID_HOME/cmdline-tools/latest ]; then
+  echo "Downloading Command Line Tools"
+  mkdir -p $ANDROID_HOME/cmdline-tools
+  cd $ANDROID_HOME/cmdline-tools
+  curl -O https://dl.google.com/android/repository/commandlinetools-mac-7302050_latest.zip
+  unzip commandlinetools-mac-7302050_latest.zip -d latest
+  rm commandlinetools-mac-7302050_latest.zip
+  cd -
 fi
 
-# Start the emulator in the background
-echo "Starting emulator for ${AVD_NAME}"
-nohup emulator -avd $AVD_NAME -no-audio -no-window &
-EMULATOR_PID=$!
+# Accept licenses
+yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
 
-# Wait for the emulator to start
+# Install necessary SDK packages
+$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3" "emulator" "system-images;android-30;google_apis;x86_64"
+
+# Check if AVD already exists and delete it if so
+avdmanager list avd | grep "testEmulator" && avdmanager delete avd -n testEmulator
+
+# Create a new AVD
+echo "no" | avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --force
+
+# Start the emulator in headless mode
+emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
+# Wait for the emulator to finish booting
 $ANDROID_HOME/platform-tools/adb wait-for-device
 
-echo "Emulator started"
-
-# Optional: Unlock the screen (useful for some system images)
-$ANDROID_HOME/platform-tools/adb shell input keyevent 82 &
-
-# Wait a bit for the emulator to fully start
-sleep 30
-
-echo "Emulator should be ready"
+# Optional: Check for the device's boot completion (useful for running automated tests afterwards)
+$ANDROID_HOME/platform-tools/adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
