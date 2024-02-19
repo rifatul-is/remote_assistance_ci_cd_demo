@@ -70,8 +70,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: testBuild.apk
-        path: app/build/output/apk/debug/app-debug.apk
-
+        path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
