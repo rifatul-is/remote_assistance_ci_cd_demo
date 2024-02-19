@@ -19,9 +19,6 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v2
-
 #    - name: Cache Android SDK and emulator
 #      uses: actions/cache@v2
 #      with:
@@ -60,7 +57,7 @@ jobs:
     - name: Run Emulator
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 30
+        api-level: 29
         script: ./gradlew connectedCheck
 
     - name: Check disk space
