@@ -30,7 +30,7 @@ jobs:
       run: set_up_android_sdk.sh
 
     - name: Create and start emulator
-      run: ./scripts/create-and-start-emulator.sh
+      run: start_emulator.sh
 
     - name: Check disk space
       run: df -h
