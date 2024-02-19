@@ -17,7 +17,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-Mobile.startApplication('/Users/rifatulislamramim/AndroidStudioProjects/RemoteAssistancDemo/app/build/outputs/apk/debug/app-debug.apk', 
+Mobile.startApplication('/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/app-debug-androidTest.apk', 
     true)
 
 Mobile.tap(findTestObject('Object Repository/android.widget.Button - Go to Settings'), 0)
