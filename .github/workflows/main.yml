@@ -71,9 +71,9 @@ jobs:
       with:
         name: testBuild.apk
         path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-        
+
     - name: List of devices
-      run : adb list
+      run : adb devices
 
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
