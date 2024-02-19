@@ -16,17 +16,24 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Set up Android SDK
-      uses: android-actions/setup-android@v2
-
-    - name: Create and start emulator
-      uses: ReactiveCircus/android-emulator-runner@v2
+    - name: Cache Android SDK and emulator
+      uses: actions/cache@v2
       with:
-        api-level: 29
-        script: ./gradlew connectedCheck
+        path: |
+          ~/Library/Android/sdk
+          ~/.android
+        key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/build.gradle') }}
+        restore-keys: |
+          ${{ runner.os }}-android-sdk-
+
+    - name: Setup Android SDK
+      run: ./scripts/setup-android-sdk.sh
+      
+    - name: Create and start emulator
+      run: ./scripts/create-and-start-emulator.sh
 
     - name: Check disk space
-      run: df . -h
+      run: df -h
 
     - name: Build with gradle
       run: ./gradlew build
