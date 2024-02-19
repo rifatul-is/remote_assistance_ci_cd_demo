@@ -27,10 +27,10 @@ jobs:
           ${{ runner.os }}-android-sdk-
 
     - name: Setup Android SDK
-      run: set_up_android_sdk.sh
+      run: /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/set_up_android_sdk.sh
 
     - name: Create and start emulator
-      run: start_emulator.sh
+      run: /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/start_emulator.sh
 
     - name: Check disk space
       run: df -h
