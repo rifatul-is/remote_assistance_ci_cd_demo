@@ -71,12 +71,15 @@ jobs:
       with:
         name: testBuild.apk
         path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+        
+    - name: List of devices
+      run : adb list
 
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
       with:
         version: '7.5.5'
-        projectPath: '/katalon-tests'
+        projectPath: '/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests'
         args: './katalonc -noSplash -runMode=console -projectPath="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests/Test.prj" -retry=0 -testSuitePath="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="85c71a78-37fe-491c-8054-e9409964c277" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true -webui.autoUpdateDrivers=true'
 
   
