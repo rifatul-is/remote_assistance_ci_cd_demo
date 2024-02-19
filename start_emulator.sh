@@ -30,7 +30,7 @@ avdmanager list avd | grep "testEmulator" && avdmanager delete avd -n testEmulat
 echo "no" | avdmanager create avd -n testEmulator -k "system-images;android-30;google_apis;x86_64" --force
 
 # Start the emulator in headless mode
-emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
+$ANDROID_HOME/emulator/emulator -avd testEmulator -no-window -no-audio -no-boot-anim &
 # Wait for the emulator to finish booting
 $ANDROID_HOME/platform-tools/adb wait-for-device
 
