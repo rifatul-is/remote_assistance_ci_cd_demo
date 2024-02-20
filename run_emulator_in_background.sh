@@ -1,8 +1,8 @@
 cd ~/Library/Android/sdk/emulator
 ./emulator -list-avds
-AVD_NAME=$(./emulator -list-avds)
+AVD_NAME=$(./emulator -list-avds | head -n 1) # Assuming you want to start the first AVD in the list
 adb devices
-./emulator -avd "$AVD_NAME" -no-snapshot-load & disown
+./emulator -avd "$AVD_NAME" -no-snapshot-load -no-audio -no-window & disown
 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 adb devices
 #pushd "/Users/rifatulislamramim/Downloads/Katalon_Studio_Engine_MacOS-8.6.8/Katalon Studio Engine.app/Contents/MacOS"
