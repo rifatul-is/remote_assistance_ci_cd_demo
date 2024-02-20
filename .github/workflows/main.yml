@@ -60,8 +60,8 @@ jobs:
         api-level: 29
         script: ./gradlew connectedCheck
 
-    - name: Check disk space
-      run: df -h
+#    - name: Check disk space
+#      run: df -h
 
     - name: Installing Node
       uses: actions/setup-node@v4
