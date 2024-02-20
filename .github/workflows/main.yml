@@ -72,8 +72,8 @@ jobs:
         name: testBuild.apk
         path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-    - name: List of devices
-      run : adb devices
+    - name: Run Emulator in BG
+      run : /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/run_emulator_in_background.sh
 
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
