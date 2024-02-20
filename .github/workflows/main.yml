@@ -63,14 +63,17 @@ jobs:
     - name: Check disk space
       run: df -h
 
-    - name: Build with gradle
-      run: ./gradlew build
+#    - name: Build with gradle
+#      run: ./gradlew build
+#
+#    - name: Upload build artifact
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: testBuild.apk
+#        path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-    - name: Upload build artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: testBuild.apk
-        path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+    - name: List of Devices
+      run: adb devices
 
     - name: Run Emulator in BG
       run : /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/run_emulator_in_background.sh
