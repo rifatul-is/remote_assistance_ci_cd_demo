@@ -1,6 +1,8 @@
 cd ~/Library/Android/sdk/emulator
+./emulator -list-avds
+AVD_NAME=$(./emulator -list-avds)
 adb devices
-./emulator -avd Pixel_7_API_34 & disown
+./emulator -avd "$AVD_NAME" & disown
 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 adb devices
 #pushd "/Users/rifatulislamramim/Downloads/Katalon_Studio_Engine_MacOS-8.6.8/Katalon Studio Engine.app/Contents/MacOS"
