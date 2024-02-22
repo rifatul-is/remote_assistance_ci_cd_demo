@@ -112,7 +112,7 @@ jobs:
       with:
         version: '8.6.8'
         projectPath: '/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests'
-        args: ' -retry=0 -testSuitePath="Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" --config -webui.autoUpdateDrivers=true'
+        args: ' -retry=0 -testSuitePath="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" --config -webui.autoUpdateDrivers=true'
 
   
 
