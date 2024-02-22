@@ -54,31 +54,31 @@ jobs:
         disable-animations: false
         script: echo "Generated AVD snapshot for caching."
 
-    - name: Run Emulator
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        script: ./gradlew connectedCheck
+#    - name: Run Emulator
+#      uses: reactivecircus/android-emulator-runner@v2
+#      with:
+#        api-level: 29
+#        script: ./gradlew connectedCheck
 
 #    - name: Check disk space
 #      run: df -h
 
-    - name: Installing Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 21
-
-    - name: Checking Node and NPM
-      run: npm -v
-
-    - name: Installing Appium
-      run: npm install --unsafe-per=true -g appium@1.22.0
-
-    - name: Checking Node Packages
-      run: npm list -g --depth=0
-
-    - name: Checking Appium Packages
-      run: appium --version
+#    - name: Installing Node
+#      uses: actions/setup-node@v4
+#      with:
+#        node-version: 21
+#
+#    - name: Checking Node and NPM
+#      run: npm -v
+#
+#    - name: Installing Appium
+#      run: npm install --unsafe-per=true -g appium@1.22.0
+#
+#    - name: Checking Node Packages
+#      run: npm list -g --depth=0
+#
+#    - name: Checking Appium Packages
+#      run: appium --version
 
 #    - name: Build with gradle
 #      run: ./gradlew build
@@ -95,21 +95,24 @@ jobs:
     - name: Run Emulator in BG
       run : /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/run_emulator_in_background.sh
 
-    - name: Check if directory exists
-      run: |
-            DIRECTORY="/Users/runner/.katalon/license"
-            if [ -d "$DIRECTORY" ]; then
-                echo "The directory $DIRECTORY exists."
-            else
-                echo "The directory $DIRECTORY does not exist."
-            fi
+#    - name: Check if directory exists
+#      run: |
+#        TARGET_DIRECTORY="/Users/runner/.katalon/license"
+#        SOURCE_DIRECTORY="/path/to/source/directory" # Replace this with the actual source directory path
+#        if [ -d "$TARGET_DIRECTORY" ]; then
+#          echo "The directory $TARGET_DIRECTORY exists."
+#        else
+#          echo "The directory $TARGET_DIRECTORY does not exist. Copying from $SOURCE_DIRECTORY..."
+#          cp -r "$SOURCE_DIRECTORY" "$TARGET_DIRECTORY"
+#          echo "Copy completed."
+#        fi
 
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
       with:
         version: '8.6.8'
         projectPath: '/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests'
-        args: './katalonc -noSplash -runMode=console -projectPath="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests/Test.prj" -retry=0 -testSuitePath="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" -apiKey="85c71a78-37fe-491c-8054-e9409964c277" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true -webui.autoUpdateDrivers=true -appiumDirectory="/Users/runner/hostedtoolcache/node/21.6.2/x64/lib/node_modules/appium"'
+        args: ' -retry=0 -testSuitePath="Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" --config -webui.autoUpdateDrivers=true'
 
   
 
