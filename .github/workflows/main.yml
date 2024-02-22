@@ -95,17 +95,17 @@ jobs:
 #    - name: Run Emulator in BG
 #      run : /Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/run_emulator_in_background.sh
 
-#    - name: Check if directory exists
-#      run: |
-#        TARGET_DIRECTORY="/Users/runner/.katalon"
-#        SOURCE_DIRECTORY="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/.katalon"
-#        if [ -d "$TARGET_DIRECTORY" ]; then
-#          echo "The directory $TARGET_DIRECTORY exists."
-#        else
-#          echo "The directory $TARGET_DIRECTORY does not exist. Copying from $SOURCE_DIRECTORY..."
-#          cp -r "$SOURCE_DIRECTORY" "$TARGET_DIRECTORY"
-#          echo "Copy completed."
-#        fi
+    - name: Check if directory exists
+      run: |
+        TARGET_DIRECTORY="/Users/runner/.katalon"
+        SOURCE_DIRECTORY="/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/.katalon"
+        if [ -d "$TARGET_DIRECTORY" ]; then
+          echo "The directory $TARGET_DIRECTORY exists."
+        else
+          echo "The directory $TARGET_DIRECTORY does not exist. Copying from $SOURCE_DIRECTORY..."
+          cp -r "$SOURCE_DIRECTORY" "$TARGET_DIRECTORY"
+          echo "Copy completed."
+        fi
 
     - name: Katalon Studio Github Action
       uses: katalon-studio/katalon-studio-github-action@v3.0
