@@ -63,22 +63,22 @@ jobs:
 #    - name: Check disk space
 #      run: df -h
 
-#    - name: Installing Node
-#      uses: actions/setup-node@v4
-#      with:
-#        node-version: 21
-#
-#    - name: Checking Node and NPM
-#      run: npm -v
-#
-#    - name: Installing Appium
-#      run: npm install --unsafe-per=true -g appium@1.22.0
-#
-#    - name: Checking Node Packages
-#      run: npm list -g --depth=0
-#
-#    - name: Checking Appium Packages
-#      run: appium --version
+    - name: Installing Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 21
+
+    - name: Checking Node and NPM
+      run: npm -v
+
+    - name: Installing Appium
+      run: npm install --unsafe-per=true -g appium@1.22.0
+
+    - name: Checking Node Packages
+      run: npm list -g --depth=0
+
+    - name: Checking Appium Packages
+      run: appium --version
 
 #    - name: Build with gradle
 #      run: ./gradlew build
@@ -112,7 +112,7 @@ jobs:
       with:
         version: '8.6.8'
         projectPath: '/Users/runner/work/remote_assistance_ci_cd_demo/remote_assistance_ci_cd_demo/katalon-tests'
-        args: '-retry=0 -testSuitePath="/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" --config -webui.autoUpdateDrivers=true'
+        args: '-retry=0 -testSuitePath="/Test Suites/Remote Assistance Demo Test" -browserType="Android" -deviceId="emulator-5554" -executionProfile="default" --config -webui.autoUpdateDrivers=true -appiumDirectory="/Users/runner/hostedtoolcache/node/21.6.2/x64/lib/node_modules/appium"'
 
   
 
